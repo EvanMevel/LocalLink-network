@@ -29,6 +29,11 @@ class PacketSenderTest {
             public OutputStream getOutputStream() {
                 return bos;
             }
+
+            @Override
+            public boolean isClosed() {
+                return false;
+            }
         };
         TestPacket test = new TestPacket(42);
         receiver.sendPacket(test);

@@ -32,6 +32,14 @@ public abstract class LinkSocket implements PacketReceiver, PacketSender {
         thread.interrupt();
     }
 
+    public void closed() {
+
+    }
+
+    public String getPrintableAddress() {
+        return socket.getInetAddress().getHostAddress() + ":" + socket.getPort();
+    }
+
     public boolean isClosed() {
         return socket.isClosed();
     }
@@ -45,16 +53,22 @@ public abstract class LinkSocket implements PacketReceiver, PacketSender {
                 onPacketReceived(packet);
             } catch (SocketException e) {
                 if (socket.isClosed()) {
-                    return;
+                    break;
                 }
+            } catch (ConnectionClosedException e) {
+                break;
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
+                break;
             } catch (PacketMalformedException e) {
-                throw new RuntimeException(e);
+                System.err.println("Received malformed packet, could be a network error or a packet corruption.");
+                e.printStackTrace();
             } catch (PacketParsingException e) {
-                throw new RuntimeException(e);
+                System.err.println("Packet parsing error, this is likely a developer error. Please report this to the developer.");
+                e.printStackTrace();
             }
         }
+        closed();
     }
 
     @Override
