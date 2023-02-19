@@ -1,4 +1,6 @@
-package fr.emevel.locallink.network;
+package fr.emevel.locallink.network.jmdns;
+
+import fr.emevel.locallink.network.InetAddressUtils;
 
 import javax.jmdns.JmDNS;
 import java.io.IOException;

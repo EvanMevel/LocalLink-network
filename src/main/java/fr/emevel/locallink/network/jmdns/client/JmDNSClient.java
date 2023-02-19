@@ -1,6 +1,6 @@
-package fr.emevel.locallink.network.client;
+package fr.emevel.locallink.network.jmdns.client;
 
-import fr.emevel.locallink.network.LinkJmdns;
+import fr.emevel.locallink.network.jmdns.LinkJmdns;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;

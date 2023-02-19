@@ -1,4 +1,4 @@
-package fr.emevel.locallink.network.server;
+package fr.emevel.locallink.network.jmdns.server;
 
 import lombok.NoArgsConstructor;
 

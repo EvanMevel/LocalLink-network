@@ -1,13 +1,13 @@
-package fr.emevel.locallink.network.server;
+package fr.emevel.locallink.network.jmdns.server;
 
-import fr.emevel.locallink.network.LinkJmdns;
+import fr.emevel.locallink.network.jmdns.LinkJmdns;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
 import java.io.IOException;
 
 /**
- * This class is meant to be used in a {@link fr.emevel.locallink.network.server.JmDNSServerThread}
+ * This class is meant to be used in a {@link fr.emevel.locallink.network.jmdns.server.JmDNSServerThread}
  */
 public class JmDNSServer {
 

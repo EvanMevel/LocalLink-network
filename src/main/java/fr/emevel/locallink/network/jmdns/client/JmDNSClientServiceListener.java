@@ -1,4 +1,4 @@
-package fr.emevel.locallink.network.client;
+package fr.emevel.locallink.network.jmdns.client;
 
 import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
