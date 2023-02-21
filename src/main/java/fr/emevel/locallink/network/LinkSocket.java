@@ -1,5 +1,6 @@
 package fr.emevel.locallink.network;
 
+import fr.emevel.locallink.network.packets.Packet;
 import fr.emevel.locallink.network.serial.PacketMalformedException;
 import fr.emevel.locallink.network.serial.PacketParsingException;
 

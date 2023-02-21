@@ -1,4 +1,4 @@
-package fr.emevel.locallink.network;
+package fr.emevel.locallink.network.packets;
 
 import fr.emevel.locallink.network.serial.NetworkSerializable;
 

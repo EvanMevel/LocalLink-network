@@ -1,6 +1,6 @@
 package fr.emevel.locallink.network.serial;
 
-import fr.emevel.locallink.network.Packet;
+import fr.emevel.locallink.network.packets.Packet;
 import fr.emevel.locallink.network.packets.*;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
@@ -57,6 +57,8 @@ public class PacketSerializer {
 
     static {
         registerPacket(0, PacketHandShake.class);
+        registerPacket(1, PacketAskFolders.class);
+        registerPacket(2, PacketFolderList.class);
     }
 
 }

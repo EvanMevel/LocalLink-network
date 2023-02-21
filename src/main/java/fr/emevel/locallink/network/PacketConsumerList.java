@@ -1,5 +1,6 @@
 package fr.emevel.locallink.network;
 
+import fr.emevel.locallink.network.packets.Packet;
 import lombok.NoArgsConstructor;
 
 import java.util.HashMap;

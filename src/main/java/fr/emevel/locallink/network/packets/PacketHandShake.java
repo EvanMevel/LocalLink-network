@@ -1,6 +1,5 @@
 package fr.emevel.locallink.network.packets;
 
-import fr.emevel.locallink.network.Packet;
 import fr.emevel.locallink.network.serial.ByteBufferWrapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
