@@ -26,7 +26,7 @@ public interface PacketReceiver {
         getOutputStream().flush();
     }
 
-    default void sendPacket(Iterable<Packet> packets) throws IOException, PacketParsingException {
+    default void sendPacket(Iterable<? extends Packet> packets) throws IOException, PacketParsingException {
         for (Packet packet : packets) {
             sendPacket(packet);
         }
@@ -56,6 +56,18 @@ public interface PacketReceiver {
         } catch (PacketParsingException e) {
             System.err.println("Packet parsing error, this is likely a developer error. Please report this to the developer.");
             e.printStackTrace();
+        }
+    }
+
+    default void safeSendPacket(Packet... packets) {
+        for (Packet packet : packets) {
+            safeSendPacket(packet);
+        }
+    }
+
+    default void safeSendPacket(Iterable<? extends Packet> packets) {
+        for (Packet packet : packets) {
+            safeSendPacket(packet);
         }
     }
 

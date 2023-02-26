@@ -59,6 +59,10 @@ public class PacketSerializer {
         registerPacket(0, PacketHandShake.class);
         registerPacket(1, PacketAskFolders.class);
         registerPacket(2, PacketFolderList.class);
+        registerPacket(3, PacketAskFiles.class);
+        registerPacket(4, PacketFileList.class);
+        registerPacket(5, PacketSendFile.class);
+        registerPacket(6, PacketDeleteFiles.class);
     }
 
 }
