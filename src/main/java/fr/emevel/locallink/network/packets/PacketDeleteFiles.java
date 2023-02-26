@@ -7,30 +7,31 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PacketDeleteFiles implements Packet{
 
-    private String folder;
+    private UUID folder;
     private List<String> files;
 
     @Override
     public void write(ByteBufferWrapper buffer) {
-        buffer.putString(folder);
+        buffer.putUUID(folder);
         buffer.putList(files);
     }
 
     @Override
     public void read(ByteBufferWrapper buffer) {
-        folder = buffer.getString();
+        folder = buffer.getUUID();
         files = buffer.getList(String::new);
     }
 
     @Override
     public int getSize() {
-        return stringSize(folder) + listSize(files);
+        return UUID_SIZE + listSize(files);
     }
 
     public static Builder builder() {
@@ -42,12 +43,12 @@ public class PacketDeleteFiles implements Packet{
         private PacketDeleteFiles current = null;
         private int maxFiles = 20;
 
-        private void newCurrent(String name) {
-            current = new PacketDeleteFiles(name, new ArrayList<>());
+        private void newCurrent(UUID folder) {
+            current = new PacketDeleteFiles(folder, new ArrayList<>());
             packets.add(current);
         }
 
-        public void addFile(String folder, String file) {
+        public void addFile(UUID folder, String file) {
             if (current == null || current.getFiles().size() >= maxFiles) {
                 newCurrent(folder);
             }

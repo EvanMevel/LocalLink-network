@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -152,6 +153,15 @@ public class ByteBufferWrapper {
             list.add(supplier.get());
         }
         return list;
+    }
+
+    public void putUUID(UUID uuid) {
+        buffer.putLong(uuid.getMostSignificantBits());
+        buffer.putLong(uuid.getLeastSignificantBits());
+    }
+
+    public UUID getUUID() {
+        return new UUID(buffer.getLong(), buffer.getLong());
     }
 
 }

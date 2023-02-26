@@ -6,6 +6,9 @@ import java.util.List;
 
 public interface NetworkSerializable extends Serializable {
 
+    int UUID_SIZE = Long.BYTES * 2;
+    int BOOLEAN_SIZE = Byte.BYTES;
+
     void write(ByteBufferWrapper buffer);
 
     void read(ByteBufferWrapper buffer);

@@ -63,6 +63,7 @@ public class PacketSerializer {
         registerPacket(4, PacketFileList.class);
         registerPacket(5, PacketSendFile.class);
         registerPacket(6, PacketDeleteFiles.class);
+        registerPacket(7, PacketCreateLink.class);
     }
 
 }

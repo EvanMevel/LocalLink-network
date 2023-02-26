@@ -5,25 +5,27 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PacketAskFiles implements Packet {
 
-    private String folder = "";
+    private UUID folder;
 
     @Override
     public void write(ByteBufferWrapper buffer) {
-        buffer.putString(folder);
+        buffer.putUUID(folder);
     }
 
     @Override
     public void read(ByteBufferWrapper buffer) {
-        folder = buffer.getString();
+        folder = buffer.getUUID();
     }
 
     @Override
     public int getSize() {
-        return stringSize(folder);
+        return UUID_SIZE;
     }
 }

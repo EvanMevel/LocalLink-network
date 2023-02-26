@@ -10,33 +10,34 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class PacketFileList implements Packet {
 
-    private String folder;
+    private UUID folder;
     private boolean end;
     private List<SyncFile> files;
 
     @Override
     public void write(ByteBufferWrapper buffer) {
-        buffer.putString(folder);
+        buffer.putUUID(folder);
         buffer.putBoolean(end);
         buffer.putList(files);
     }
 
     @Override
     public void read(ByteBufferWrapper buffer) {
-        folder = buffer.getString();
+        folder = buffer.getUUID();
         end = buffer.getBoolean();
         files = buffer.getList(SyncFile::new);
     }
 
     @Override
     public int getSize() {
-        return stringSize(folder) + 1 + listSize(files);
+        return UUID_SIZE + BOOLEAN_SIZE + listSize(files);
     }
 
     public static Builder builder() {
@@ -49,29 +50,29 @@ public class PacketFileList implements Packet {
         private PacketFileList current = null;
         private int maxFiles = 20;
 
-        private void newCurrent(String name) {
-            current = new PacketFileList(name, false, new ArrayList<>());
+        private void newCurrent(UUID folder) {
+            current = new PacketFileList(folder, false, new ArrayList<>());
             packets.add(current);
         }
 
-        public void addFile(File folder, File file) throws IOException {
+        public void addFile(UUID folder, File file) throws IOException {
             if (current == null || current.getFiles().size() >= maxFiles) {
-                newCurrent(folder.getName());
+                newCurrent(folder);
             }
             current.getFiles().add(new SyncFile(file));
         }
 
-        public Builder processFolder(File folder) throws IOException {
+        public Builder processFolder(UUID id, File folder) throws IOException {
             if (!folder.isDirectory()) {
                 return this;
             } else if (current == null) {
-                newCurrent(folder.getName());
+                newCurrent(id);
             }
             for (File child : folder.listFiles()) {
                 if (child.isDirectory()) {
                     continue;
                 }
-                addFile(folder, child);
+                addFile(id, child);
             }
             return this;
         }

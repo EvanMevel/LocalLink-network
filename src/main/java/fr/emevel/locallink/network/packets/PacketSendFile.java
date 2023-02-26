@@ -5,19 +5,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PacketSendFile implements Packet {
 
-    private String folder;
+    private UUID folder;
     private String name;
     private int port;
     private long length;
 
     @Override
     public void write(ByteBufferWrapper buffer) {
-        buffer.putString(folder);
+        buffer.putUUID(folder);
         buffer.putString(name);
         buffer.putInt(port);
         buffer.putLong(length);
@@ -25,7 +27,7 @@ public class PacketSendFile implements Packet {
 
     @Override
     public void read(ByteBufferWrapper buffer) {
-        folder = buffer.getString();
+        folder = buffer.getUUID();
         name = buffer.getString();
         port = buffer.getInt();
         length = buffer.getLong();
@@ -33,6 +35,6 @@ public class PacketSendFile implements Packet {
 
     @Override
     public int getSize() {
-        return stringSize(folder) + stringSize(name) + Integer.BYTES + Long.BYTES;
+        return UUID_SIZE + stringSize(name) + Integer.BYTES + Long.BYTES;
     }
 }

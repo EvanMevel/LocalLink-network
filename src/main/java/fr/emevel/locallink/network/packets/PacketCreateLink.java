@@ -10,28 +10,25 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class PacketHandShake implements Packet {
+public class PacketCreateLink implements Packet{
 
-    private String name;
-    private UUID uuid;
-    private String version;
+    private UUID folderUuid;
+    private String folderName;
 
     @Override
     public void write(ByteBufferWrapper buffer) {
-        buffer.putString(name);
-        buffer.putUUID(uuid);
-        buffer.putString(version);
+        buffer.putUUID(folderUuid);
+        buffer.putString(folderName);
     }
 
     @Override
     public void read(ByteBufferWrapper buffer) {
-        name = buffer.getString();
-        uuid = buffer.getUUID();
-        version = buffer.getString();
+        folderUuid = buffer.getUUID();
+        folderName = buffer.getString();
     }
 
     @Override
     public int getSize() {
-        return stringSize(name) + UUID_SIZE + stringSize(version);
+        return UUID_SIZE + stringSize(folderName);
     }
 }
