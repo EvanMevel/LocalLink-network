@@ -24,7 +24,7 @@ public class JmDNSServerThread {
     }
 
     public void stop() {
-        synchronized (jmDNSThread) {
+        synchronized (jmDNSRunnable) {
             jmDNSRunnable.notify();
         }
     }

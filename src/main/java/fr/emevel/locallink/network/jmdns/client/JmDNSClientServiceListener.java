@@ -11,7 +11,7 @@ public class JmDNSClientServiceListener implements ServiceListener {
 
     private final BiConsumer<InetSocketAddress, ServiceInfo> consumer;
 
-    public JmDNSClientServiceListener(BiConsumer<InetSocketAddress, ServiceInfo> consumer) {
+    JmDNSClientServiceListener(BiConsumer<InetSocketAddress, ServiceInfo> consumer) {
         this.consumer = consumer;
     }
 

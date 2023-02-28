@@ -18,11 +18,13 @@ public class JmDNSClient {
     }
 
     public void registerListener() throws IOException {
+        System.out.println("Registering JmDNS listener");
         this.jmDNS = LinkJmdns.initJmdnsLocal();
         this.jmDNS.addServiceListener(LinkJmdns.SERVICE_TYPE, serviceListener);
     }
 
     public void stop() throws IOException {
+        System.out.println("Stopping JmDNS listener");
         if (jmDNS != null) {
             jmDNS.removeServiceListener(LinkJmdns.SERVICE_TYPE, serviceListener);
             jmDNS.close();

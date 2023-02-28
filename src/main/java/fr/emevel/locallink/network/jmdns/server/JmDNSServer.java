@@ -14,7 +14,7 @@ public class JmDNSServer {
     private final int port;
     private JmDNS jmDNS = null;
 
-    public JmDNSServer(int port) {
+    JmDNSServer(int port) {
         this.port = port;
     }
 
