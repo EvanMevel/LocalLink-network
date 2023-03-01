@@ -1,6 +1,6 @@
 package fr.emevel.locallink.network.serial;
 
-public class PacketParsingException extends PacketException {
+public class PacketParsingException extends RuntimeException {
 
     public PacketParsingException() {
     }

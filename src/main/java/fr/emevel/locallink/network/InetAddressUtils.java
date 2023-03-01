@@ -1,21 +1,20 @@
 package fr.emevel.locallink.network;
 
-import org.apache.commons.collections4.IteratorUtils;
-
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Collections;
 
 public class InetAddressUtils {
 
     private static InetAddress getAddressFromInterfaces() throws SocketException {
         InetAddress candidateAddress = null;
 
-        Iterable<NetworkInterface> interfaces = IteratorUtils.asIterable(NetworkInterface.getNetworkInterfaces().asIterator());
+        Iterable<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
 
         for (NetworkInterface networkInterface : interfaces) {
-            Iterable<InetAddress> inetAddresses = IteratorUtils.asIterable(networkInterface.getInetAddresses().asIterator());
+            Iterable<InetAddress> inetAddresses = Collections.list(networkInterface.getInetAddresses());
             for (InetAddress inetAddress : inetAddresses) {
                 if (!inetAddress.isLoopbackAddress()) {
                     if (inetAddress.isSiteLocalAddress()) {

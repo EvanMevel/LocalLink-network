@@ -8,7 +8,6 @@ import fr.emevel.locallink.network.serial.PacketSerializer;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.SocketException;
-import java.nio.ByteBuffer;
 
 public interface PacketReceiver {
 
@@ -16,23 +15,36 @@ public interface PacketReceiver {
 
     boolean isClosed();
 
-    default void sendPacket(Packet packet) throws IOException, PacketParsingException {
-        ByteBufferWrapper bufferWrapper = PacketSerializer.serialize(packet);
+    default void sendPacket(Packet packet) throws IOException {
+        System.out.println("Sending packet " + packet);
+
+        int packetSize = packet.getSize();
+
+        int size = Byte.BYTES // Signature
+                + Integer.BYTES // Size
+                + Integer.BYTES // Packet ID
+                + packetSize; // Packet size
+
+        ByteBufferWrapper bufferWrapper = new ByteBufferWrapper(size);
+
+        bufferWrapper.put(Signatures.SIGNATURE_BYTES); // Signature
+        bufferWrapper.putInt(Integer.BYTES + packetSize); // Size
+
+        PacketSerializer.serialize(packet, bufferWrapper); // Packet ID + Packet data
+
         byte[] buffer = bufferWrapper.array();
 
-        getOutputStream().write(Signatures.SIGNATURE_BYTES);
-        getOutputStream().write(ByteBuffer.allocate(Integer.BYTES).putInt(buffer.length).array());
         getOutputStream().write(buffer);
         getOutputStream().flush();
     }
 
-    default void sendPacket(Iterable<? extends Packet> packets) throws IOException, PacketParsingException {
+    default void sendPacket(Iterable<? extends Packet> packets) throws IOException {
         for (Packet packet : packets) {
             sendPacket(packet);
         }
     }
 
-    default void sendPacket(Packet... packets) throws IOException, PacketParsingException {
+    default void sendPacket(Packet... packets) throws IOException {
         for (Packet packet : packets) {
             sendPacket(packet);
         }

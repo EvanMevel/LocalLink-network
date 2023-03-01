@@ -16,7 +16,7 @@ public class JmDNSServerThread {
     public JmDNSServerThread(int port) {
         this.jmNDS = new JmDNSServer(port);
         this.jmDNSRunnable = new JmDNSRunnable();
-        jmDNSThread = new Thread(jmDNSRunnable);
+        jmDNSThread = new Thread(jmDNSRunnable, "JmDNSServerThread");
     }
 
     public void start() {

@@ -17,7 +17,7 @@ public class PacketSerializer {
         packets.put(id, packet);
     }
 
-    public static Packet deserialize(ByteBufferWrapper buffer) throws PacketParsingException {
+    public static Packet deserialize(ByteBufferWrapper buffer) {
         int id = buffer.getInt();
         Class<? extends Packet> packetClass = packets.get(id);
         if (packetClass == null) {
@@ -28,19 +28,32 @@ public class PacketSerializer {
             packet.read(buffer);
             return packet;
         } catch (InstantiationException e) {
-            throw new RuntimeException("Packet with class " + packetClass.getName() + " is abstract", e);
+            throw new PacketParsingException("Packet with class " + packetClass.getName() + " is abstract", e);
         } catch (InvocationTargetException e) {
-            throw new RuntimeException("Error while instantiating packet class " + packetClass.getName(), e.getCause());
+            throw new PacketParsingException("Error while instantiating packet class " + packetClass.getName(), e.getCause());
         } catch (NoSuchMethodException e) {
-            throw new RuntimeException("Packet class " + packetClass.getName() + " does not have a default constructor");
+            throw new PacketParsingException("Packet class " + packetClass.getName() + " does not have a default constructor");
         } catch (IllegalAccessException e) {
-            throw new RuntimeException("Packet class " + packetClass.getName() + " does not have a public default constructor");
+            throw new PacketParsingException("Packet class " + packetClass.getName() + " does not have a public default constructor");
         } catch (BufferUnderflowException e) {
             throw new PacketParsingException("Packet seems to be malformed", e);
         }
     }
 
-    public static ByteBufferWrapper serialize(Packet packet) throws PacketParsingException {
+    public static void serialize(Packet packet, ByteBufferWrapper buffer) {
+        Integer id = packets.getKey(packet.getClass());
+        if (id == null) {
+            throw new PacketParsingException("Unknown packet class: " + packet.getClass().getName());
+        }
+        try {
+            buffer.putInt(id);
+            packet.write(buffer);
+        } catch (BufferOverflowException e) {
+            throw new PacketParsingException("Packet seems to be malformed", e);
+        }
+    }
+
+    public static ByteBufferWrapper serialize(Packet packet) {
         Integer id = packets.getKey(packet.getClass());
         if (id == null) {
             throw new PacketParsingException("Unknown packet class: " + packet.getClass().getName());

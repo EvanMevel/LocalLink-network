@@ -17,7 +17,11 @@ public abstract class NetworkServer {
 
     public NetworkServer(int port) throws IOException {
         this.socket = new ServerSocket(port);
-        this.acceptThread = new Thread(this::accept);
+        this.acceptThread = new Thread(this::accept, "NetworkServer-Accept");
+    }
+
+    public int getPort() {
+        return socket.getLocalPort();
     }
 
     public void start() {

@@ -21,7 +21,7 @@ public abstract class LinkSocket implements PacketReceiver, PacketSender {
         this.socket = socket;
         this.outputStream = socket.getOutputStream();
         this.inputStream = socket.getInputStream();
-        this.thread = new Thread(this::run);
+        this.thread = new Thread(this::run, "LinkSocket-" + getPrintableAddress());
     }
 
     public void start() {
@@ -52,11 +52,7 @@ public abstract class LinkSocket implements PacketReceiver, PacketSender {
             try {
                 Packet packet = receivePacket();
                 onPacketReceived(packet);
-            } catch (SocketException e) {
-                if (socket.isClosed()) {
-                    break;
-                }
-            } catch (ConnectionClosedException e) {
+            } catch (SocketException | ConnectionClosedException e) {
                 break;
             } catch (IOException e) {
                 e.printStackTrace();
