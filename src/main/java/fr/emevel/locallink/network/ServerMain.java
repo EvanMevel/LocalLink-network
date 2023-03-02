@@ -42,6 +42,11 @@ public class ServerMain {
 
         NetworkServer networkServer = new NetworkServer(4242) {
             @Override
+            protected void clientDisconnected(LinkSocket client) {
+
+            }
+
+            @Override
             protected LinkSocket createClient(Socket sock) throws IOException {
                 LinkSocket client = new LinkSocket(sock) {
                     @Override

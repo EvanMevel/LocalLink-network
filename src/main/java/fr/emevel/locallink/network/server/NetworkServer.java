@@ -40,6 +40,8 @@ public abstract class NetworkServer {
         }
     }
 
+    protected abstract void clientDisconnected(LinkSocket client);
+
     public void cleanupClients() {
         List<LinkSocket> toRemove = new ArrayList<>();
         for (LinkSocket serverClient : clients) {
@@ -47,7 +49,10 @@ public abstract class NetworkServer {
                 toRemove.add(serverClient);
             }
         }
-        clients.removeAll(toRemove);
+        for (LinkSocket client : toRemove) {
+            clientDisconnected(client);
+            clients.remove(client);
+        }
     }
 
     protected abstract LinkSocket createClient(Socket sock) throws IOException;
