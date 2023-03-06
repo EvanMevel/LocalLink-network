@@ -77,6 +77,7 @@ public class PacketSerializer {
         registerPacket(5, PacketSendFile.class);
         registerPacket(6, PacketDeleteFiles.class);
         registerPacket(7, PacketCreateLink.class);
+        registerPacket(8, PacketLinkCreated.class);
     }
 
 }

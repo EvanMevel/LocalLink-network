@@ -1,8 +1,10 @@
 package fr.emevel.locallink.network.server;
 
 import fr.emevel.locallink.network.LinkSocket;
+import lombok.Getter;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -13,10 +15,16 @@ public abstract class NetworkServer {
 
     private final ServerSocket socket;
     private final Thread acceptThread;
+    @Getter
     private final List<LinkSocket> clients = new ArrayList<>();
 
     public NetworkServer(int port) throws IOException {
         this.socket = new ServerSocket(port);
+        this.acceptThread = new Thread(this::accept, "NetworkServer-Accept");
+    }
+
+    public NetworkServer(InetAddress address, int port) throws IOException {
+        this.socket = new ServerSocket(port, 50, address);
         this.acceptThread = new Thread(this::accept, "NetworkServer-Accept");
     }
 

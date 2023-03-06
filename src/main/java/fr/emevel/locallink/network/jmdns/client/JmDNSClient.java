@@ -6,6 +6,7 @@ import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.UUID;
 import java.util.function.BiConsumer;
 
 public class JmDNSClient {
@@ -13,8 +14,8 @@ public class JmDNSClient {
     private final JmDNSClientServiceListener serviceListener;
     private JmDNS jmDNS;
 
-    public JmDNSClient(BiConsumer<InetSocketAddress, ServiceInfo> consumer) {
-        this.serviceListener = new JmDNSClientServiceListener(consumer);
+    public JmDNSClient(BiConsumer<InetSocketAddress, ServiceInfo> consumer, UUID uuid) {
+        this.serviceListener = new JmDNSClientServiceListener(consumer, uuid);
     }
 
     public void registerListener() throws IOException {

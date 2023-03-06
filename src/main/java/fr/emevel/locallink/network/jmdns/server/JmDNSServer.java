@@ -5,6 +5,8 @@ import fr.emevel.locallink.network.jmdns.LinkJmdns;
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
 import java.io.IOException;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * This class is meant to be used in a {@link fr.emevel.locallink.network.jmdns.server.JmDNSServerThread}
@@ -12,10 +14,12 @@ import java.io.IOException;
 public class JmDNSServer {
 
     private final int port;
+    private final UUID uuid;
     private JmDNS jmDNS = null;
 
-    JmDNSServer(int port) {
+    JmDNSServer(int port, UUID uuid) {
         this.port = port;
+        this.uuid = uuid;
     }
 
     public void registerService() throws IOException {
@@ -23,7 +27,10 @@ public class JmDNSServer {
             throw new IllegalStateException("Service already registered");
         }
         jmDNS = LinkJmdns.initJmdnsLocal();
-        ServiceInfo serviceInfo = ServiceInfo.create(LinkJmdns.SERVICE_TYPE, "LocalLink", port, "LocalLink");
+        ServiceInfo serviceInfo = ServiceInfo.create(
+                LinkJmdns.SERVICE_TYPE,
+                "LocalLink", port,
+                0, 0, Map.of("uuid", uuid.toString()));
         jmDNS.registerService(serviceInfo);
     }
 

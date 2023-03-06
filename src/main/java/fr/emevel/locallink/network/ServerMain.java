@@ -37,7 +37,7 @@ public class ServerMain {
     }
 
     public static void main(String[] args) throws Exception {
-        JmDNSServerThread server = new JmDNSServerThread(4242);
+        JmDNSServerThread server = new JmDNSServerThread(4242, UUID.randomUUID());
         server.start();
 
         NetworkServer networkServer = new NetworkServer(4242) {

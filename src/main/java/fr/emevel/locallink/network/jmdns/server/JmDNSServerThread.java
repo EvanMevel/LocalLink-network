@@ -3,6 +3,7 @@ package fr.emevel.locallink.network.jmdns.server;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
+import java.util.UUID;
 
 /**
  * Represent a thread holding a JmDNSServer instance.
@@ -13,8 +14,8 @@ public class JmDNSServerThread {
     private final JmDNSRunnable jmDNSRunnable;
     private final Thread jmDNSThread;
 
-    public JmDNSServerThread(int port) {
-        this.jmNDS = new JmDNSServer(port);
+    public JmDNSServerThread(int port, UUID uuid) {
+        this.jmNDS = new JmDNSServer(port, uuid);
         this.jmDNSRunnable = new JmDNSRunnable();
         jmDNSThread = new Thread(jmDNSRunnable, "JmDNSServerThread");
     }

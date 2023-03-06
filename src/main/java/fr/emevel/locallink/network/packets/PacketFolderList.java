@@ -71,13 +71,22 @@ public class PacketFolderList implements Packet {
 
         private final PacketFolderList packet = new PacketFolderList();
 
+        private boolean deep = true;
+
+        public Builder setDeep(boolean deep) {
+            this.deep = deep;
+            return this;
+        }
+
         private void addFolder(List<Folder> folders, File folder) {
             for (File file : folder.listFiles()) {
                 if (!file.isDirectory()) {
                     continue;
                 }
                 Folder fold = new Folder(file.getName());
-                addFolder(fold.getChilds(), file);
+                if (deep) {
+                    addFolder(fold.getChilds(), file);
+                }
                 folders.add(fold);
             }
         }

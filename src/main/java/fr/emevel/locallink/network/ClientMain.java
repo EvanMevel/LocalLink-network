@@ -38,7 +38,7 @@ public class ClientMain {
                     throw new RuntimeException(e);
                 }
             }
-        });
+        }, UUID.randomUUID());
         client.registerListener();
 
         Scanner scanner = new Scanner(System.in);
