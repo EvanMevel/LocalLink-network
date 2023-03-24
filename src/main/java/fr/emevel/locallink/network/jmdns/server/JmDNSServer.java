@@ -29,7 +29,7 @@ public class JmDNSServer {
         jmDNS = LinkJmdns.initJmdnsLocal();
         ServiceInfo serviceInfo = ServiceInfo.create(
                 LinkJmdns.SERVICE_TYPE,
-                "LocalLink", port,
+                "LocalLink-" + uuid.toString(), port,
                 0, 0, Map.of("uuid", uuid.toString()));
         jmDNS.registerService(serviceInfo);
     }

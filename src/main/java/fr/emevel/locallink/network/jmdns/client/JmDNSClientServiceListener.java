@@ -27,7 +27,7 @@ public class JmDNSClientServiceListener implements ServiceListener {
 
     @Override
     public void serviceRemoved(ServiceEvent serviceEvent) {
-
+        System.out.println("Service removed: " + serviceEvent.getName());
     }
 
     @Override
@@ -35,6 +35,10 @@ public class JmDNSClientServiceListener implements ServiceListener {
         // Happens when listener was registered before service
         // Events gets triggered 2 times, the first time with no data
         // The second time with all the data, so we ignore the first one
+        if (event.getInfo() != null && event.getInfo().getInetAddresses().length > 0) {
+            System.out.println("Service resolved: " + event.getName() + " at " +
+                    event.getInfo().getInetAddresses()[0] + ":" + event.getInfo().getPort());
+        }
         if (event.getInfo().hasData() && !event.getInfo().getPropertyNames().hasMoreElements()) {
             return;
         }

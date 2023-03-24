@@ -49,6 +49,11 @@
             <version>5.9.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>fr.emevel.jconfig</groupId>
+            <artifactId>jconfig</artifactId>
+            <version>1.0</version>
+        </dependency>
 
     </dependencies>
 </project>
